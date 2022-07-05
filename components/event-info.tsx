@@ -12,6 +12,7 @@ const EventInfo: React.FC = () => {
         },
         { name: "Datum", value: "17 September 2022" },
         { name: "Tyd", value: "10:00" },
+        { name: "Prys", value: "R120.00" },
     ];
     return (
         <div className="mt-8 pb-36">
