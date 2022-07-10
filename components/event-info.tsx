@@ -15,14 +15,13 @@ const EventInfo: React.FC = () => {
         { name: "Prys", value: "R120.00" },
     ];
     return (
-        <div className="mt-8 pb-36">
-            <h3 className="text-lg font-bold">Lorem Ipsum</h3>
+        <div className="p-[1rem_2rem]">
             <table className="mt-2">
                 <tbody>
                     {data.map(({ name, value, link }: EventData, index: number) => {
                         return (
                             <tr key={index}>
-                                <td className="w-24 font-bold">{name}:</td>
+                                <td className="w-24 font-bold font-happy-day">{name}:</td>
                                 <td>
                                     {link ? (
                                         <a target={"_blank"} href={`${link}`}>

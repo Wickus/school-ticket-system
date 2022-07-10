@@ -12,7 +12,7 @@ const Home: NextPage = () => {
             <Heading />
             <Content />
             <EventInfo />
-            <Form />
+            {/* <Form /> */}
         </Layout>
     );
 };
