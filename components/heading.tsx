@@ -8,7 +8,7 @@ const Heading: React.FC = () => {
     };
 
     return (
-        <div className="text-center flex flex-col items-center justify-center h-44 bg-[url('/img/land-scape.jpg')] bg-cover">
+        <div className="relative z-10 text-center flex flex-col items-center justify-center h-44 bg-[url('/img/land-scape.jpg')] bg-cover">
             {/*  Content  */}
             <h1 className="text-5xl font-fairy-godmother tracking-wide">{title}</h1>
             <h2 className="relative text-base top-2">{subTitle}</h2>
