@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: "Fairy Godmother";
+		/* Pretty Modern Browsers */
+        src: url("/fonts/fairy-godmother.ttf") format("ttf"), url("/fonts/fairy-godmother.otf") format("otf"), url("/fonts/fairy-godmother.woff") format("woff"),
+            url("/fonts/fairy-godmother.woff2") format("woff2");
+        font-display: swap;
+    }
+	@font-face {
+        font-family: "Happy Day";
+		/* Pretty Modern Browsers */
+        src: url("/fonts/happy-day.ttf") format("ttf"), url("/fonts/happy-day.otf") format("otf"), url("/fonts/happy-day.woff") format("woff"),
+            url("/fonts/happy-day.woff2") format("woff2");
+        font-display: swap;
+    }
+}
