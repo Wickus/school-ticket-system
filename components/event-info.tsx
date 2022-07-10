@@ -24,7 +24,7 @@ const EventInfo: React.FC = () => {
                                 <td className="w-24 font-bold font-happy-day">{name}:</td>
                                 <td>
                                     {link ? (
-                                        <a target={"_blank"} href={`${link}`}>
+                                        <a target={"_blank"} rel="noreferrer" href={`${link}`}>
                                             {value}
                                         </a>
                                     ) : (
