@@ -15,7 +15,7 @@ const EventInfo: React.FC = () => {
         { name: "Prys", value: "R120.00" },
     ];
     return (
-        <div className="p-[1rem_2rem]">
+        <div className="p-[1rem_2rem_8rem_2rem]">
             <table className="mt-2">
                 <tbody>
                     {data.map(({ name, value, link }: EventData, index: number) => {
