@@ -10,9 +10,10 @@ export const updateOrderGotTickets = async (order_id: string, gotTicket: boolean
                 if (snapshot.exists()) {
                     const data = [...snapshot.val()];
 
-                    data.forEach((item:FirebasePayload, index) => {
+                    data.forEach((item: FirebasePayload, index) => {
                         if (item.m_payment_id === order_id) {
                             data[index].got_tickets = gotTicket;
+                            data[index].payed = gotTicket;
                         }
                     });
 

@@ -33,34 +33,37 @@ const FormSection: React.FC = () => {
 const From: React.FC<{ toggleForm: () => void }> = ({ toggleForm }) => {
     const { endpoint, cancel_url, notify_url, return_url, merchant_id, merchant_key, amount } = purchase_config;
     const form = useRef<HTMLFormElement>(null);
+    const initialFormData = {
+        merchant_id,
+        merchant_key,
+        return_url,
+        cancel_url,
+        notify_url,
+        name_first: "",
+        name_last: "",
+        email_address: "",
+        cell_number: "",
+        m_payment_id: "",
+        amount,
+        item_name: "",
+        item_description: "",
+    };
     const [state, setState] = useState<{
         loading: boolean;
         formData: { [key: string]: string };
     }>({
         loading: false,
         formData: {
-            merchant_id,
-            merchant_key,
-            return_url,
-            cancel_url,
-            notify_url,
-            name_first: "",
-            name_last: "",
-            email_address: "",
-            cell_number: "",
-            m_payment_id: "",
-            amount,
-            item_name: "",
-            item_description: "",
+            ...initialFormData,
         },
     });
     const [addedToFireBase, setAddedToFireBase] = useState(false);
 
-	const button = "bg-red-500/70 shadow-lg shadow-red-500/40 text-white p-[1rem_2rem] rounded-full";
+    const button = "bg-red-500/70 shadow-lg shadow-red-500/40 text-white p-[1rem_2rem] rounded-full";
     const input = "border-[1px] border-gray-200 w-full p-[.5rem_1rem] mb-2 rounded-xl";
-	
-    const addToFirebase = () => {
-		setState({...state, loading:true});
+
+    const addToFirebase = (goToPayFast: boolean) => {
+        setState({ ...state, loading: true });
         const { amount, item_description, name_first, name_last, cell_number, email_address } = state.formData;
         const totalPrice = parseFloat(amount) * parseInt(item_description);
 
@@ -71,7 +74,7 @@ const From: React.FC<{ toggleForm: () => void }> = ({ toggleForm }) => {
 
                 setState({
                     ...state,
-					loading:true,
+                    loading: true,
                     formData: {
                         ...state.formData,
                         amount: totalPrice.toString(),
@@ -91,24 +94,30 @@ const From: React.FC<{ toggleForm: () => void }> = ({ toggleForm }) => {
                     payed: false,
                     total: totalPrice,
                     canceled: false,
-					got_tickets:false,
+                    got_tickets: false,
                 })
                     .then((isSuccessful) => {
                         if (isSuccessful) {
                             setAddedToFireBase(isSuccessful);
-                            setTimeout(() => {
-                                form.current?.submit();
-                            }, 100);
+                            if (goToPayFast) {
+                                setTimeout(() => {
+                                    form.current?.submit();
+                                }, 100);
+                            } else {
+                                alert(` Jou bespreeking is aanvaar, kontak ons vir verdere instruksies van betaaling. \n\n Bespreeking nommer: #${orderNumber}`);
+                                setState({ ...state, formData: initialFormData, loading: false });
+								toggleForm();
+                            }
                         }
                     })
                     .catch((e) => {
                         console.log({ e });
-						setState({...state, loading:false});
+                        setState({ ...state, loading: false });
                     });
             })
             .catch((e) => {
                 console.log({ e });
-				setState({...state, loading:false});
+                setState({ ...state, loading: false });
             });
     };
 
@@ -138,7 +147,7 @@ const From: React.FC<{ toggleForm: () => void }> = ({ toggleForm }) => {
                 action={endpoint}
                 onSubmit={(e) => {
                     !addedToFireBase ? e.preventDefault() : null;
-                    !addedToFireBase ? addToFirebase() : null;
+                    !addedToFireBase ? addToFirebase(true) : null;
                 }}
             >
                 {Object.keys(state.formData).map((item, index) => {
@@ -172,7 +181,7 @@ const From: React.FC<{ toggleForm: () => void }> = ({ toggleForm }) => {
                             Betaal Nou
                         </button>
 
-                        <button type="button" className={`${button} mt-6`}>
+                        <button type="button" className={`${button} mt-6`} onClick={() => addToFirebase(false)}>
                             Betaal daar
                         </button>
                     </div>
