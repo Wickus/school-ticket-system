@@ -91,6 +91,7 @@ const From: React.FC<{ toggleForm: () => void }> = ({ toggleForm }) => {
                     payed: false,
                     total: totalPrice,
                     canceled: false,
+					got_tickets:false,
                 })
                     .then((isSuccessful) => {
                         if (isSuccessful) {

@@ -1,6 +1,7 @@
 import { getOrders } from "@/lib/get-all-orders";
 import { FirebasePayload } from "interfaces/firebase-payload";
 import React, { useEffect, useState } from "react";
+import { updateOrderGotTickets } from "@/lib/update-order-got-tickets";
 
 const Table = () => {
     const [state, setState] = useState({
@@ -11,12 +12,13 @@ const Table = () => {
 
     useEffect(() => {
         getOrders().then((res) => setState({ orders: res, filteredOrders: res }));
-    }, []);
+    }, [orders]);
 
     const inputHandler = (e: React.FormEvent<HTMLInputElement>) => {
         const search = e.currentTarget.value;
         const searchedOrders = [...orders];
-        setState({...state,
+        setState({
+            ...state,
             filteredOrders: searchedOrders.filter((order: FirebasePayload) => {
                 return (
                     order.m_payment_id.includes(search) ||
@@ -27,6 +29,12 @@ const Table = () => {
                 );
             }),
         });
+    };
+
+    const checkHandler = async (e: React.FormEvent<HTMLInputElement>) => {
+        const { value, checked } = e.currentTarget;
+
+        await updateOrderGotTickets(value, checked);
     };
 
     const td = "border-[1px] border-gray-200 p-2";
@@ -45,13 +53,14 @@ const Table = () => {
                         <th>E-pos</th>
                         <th>Kontak Nommer</th>
                         <th>Aantal Kaartjies</th>
-                        <th>Payed</th>
-                        <th>Canceled</th>
+                        <th>Gebetaal</th>
+                        <th>Gekanseleer</th>
+                        <th>Kaartjies Ontvang</th>
                     </tr>
                 </thead>
                 <tbody>
                     {filteredOrders.map((item: FirebasePayload) => {
-                        const { m_payment_id, name_first, name_last, email_address, cell_number, quantity, payed, canceled } = item;
+                        const { m_payment_id, name_first, name_last, email_address, cell_number, quantity, payed, canceled, got_tickets } = item;
                         return (
                             <tr>
                                 <td className={td}>{m_payment_id}</td>
@@ -62,6 +71,9 @@ const Table = () => {
                                 <td className={td}>{quantity}</td>
                                 <td className={td}>{payed ? "Ja" : "Nee"}</td>
                                 <td className={td}>{canceled ? "Ja" : "Nee"}</td>
+                                <td className={td}>
+                                    <input className="cursor-pointer" type="checkbox" name={m_payment_id} value={m_payment_id} checked={got_tickets} disabled={got_tickets} onChange={checkHandler} />
+                                </td>
                             </tr>
                         );
                     })}

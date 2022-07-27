@@ -9,4 +9,5 @@ export interface FirebasePayload {
     payed: boolean;
     total: number;
     canceled: boolean;
+	got_tickets:boolean;
 }
