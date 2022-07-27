@@ -59,10 +59,10 @@ const Table = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredOrders.map((item: FirebasePayload) => {
+                    {filteredOrders.map((item: FirebasePayload, index: number) => {
                         const { m_payment_id, name_first, name_last, email_address, cell_number, quantity, payed, canceled, got_tickets } = item;
                         return (
-                            <tr>
+                            <tr key={index}>
                                 <td className={td}>{m_payment_id}</td>
                                 <td className={td}>{name_first}</td>
                                 <td className={td}>{name_last}</td>
