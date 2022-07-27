@@ -1,7 +1,7 @@
 import database from "./firebase";
 import { ref, get, child, set } from "firebase/database";
 
-export const updateOrderPayment = async (order_id: string): Promise<any> => {
+export const updateOrderPayment = async (order_id: string, isComplete:boolean): Promise<any> => {
     return new Promise((resolve, reject) => {
         const databaseLocation = "orders";
         get(child(ref(database), databaseLocation))
@@ -11,7 +11,11 @@ export const updateOrderPayment = async (order_id: string): Promise<any> => {
 
                     data.forEach((item, index) => {
                         if (item.m_payment_id === order_id) {
-                            data[index].payed = true;
+							if(isComplete){
+								data[index].payed = true;
+							}else{
+								data[index].canceled = true;
+							}
                         }
                     });
 
