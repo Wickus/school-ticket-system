@@ -50,8 +50,8 @@ const ReturnPage = () => {
                             <>
                                 <p className="text-center font-bold">Jou bespreeking nommers:</p>
                                 <ul className="flex items-center justify-center mt-2">
-                                    {orders.map((order: PayFastPayload) => {
-                                        return <li className="bg-gray-200 p-1.5 m-1 rounded-xl">{order.item_name}</li>;
+                                    {orders.map((order: PayFastPayload, index:number) => {
+                                        return <li key={index} className="bg-gray-200 p-1.5 m-1 rounded-xl">{order.item_name}</li>;
                                     })}
                                 </ul>
                             </>
