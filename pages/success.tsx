@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getOrder } from "@/lib/get-order";
 import { PayFastPayload } from "interfaces/payfast-payload";
+import { getCookie } from "@/lib/cookies";
+import { updateOrderPayment } from "@/lib/update-order-payment";
 
 const ReturnPage = () => {
     const [state, setState] = useState({
@@ -24,6 +26,14 @@ const ReturnPage = () => {
             setState({ ...state, loading: false, orders: res, searched: true });
         });
     };
+
+	useEffect(()=>{
+		const m_payment_id = getCookie("order-number");
+
+		if(m_payment_id && m_payment_id != ""){
+			updateOrderPayment(m_payment_id, true);
+		}
+	},[]);
 
     return (
         <div className="max-w-[420px] w-full m-auto h-screen overflow-hidden flex flex-col items-center justify-center">

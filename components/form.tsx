@@ -56,6 +56,9 @@ const From: React.FC<{ toggleForm: () => void }> = ({ toggleForm }) => {
     });
     const [addedToFireBase, setAddedToFireBase] = useState(false);
 
+	const button = "bg-red-500/70 shadow-lg shadow-red-500/40 text-white p-[1rem_2rem] rounded-full";
+    const input = "border-[1px] border-gray-200 w-full p-[.5rem_1rem] mb-2 rounded-xl";
+	
     const addToFirebase = () => {
 		setState({...state, loading:true});
         const { amount, item_description, name_first, name_last, cell_number, email_address } = state.formData;
@@ -107,9 +110,6 @@ const From: React.FC<{ toggleForm: () => void }> = ({ toggleForm }) => {
 				setState({...state, loading:false});
             });
     };
-
-    const button = "bg-red-500/70 shadow-lg shadow-red-500/40 text-white p-[1rem_2rem] rounded-full";
-    const input = "border-[1px] border-gray-200 w-full p-[.5rem_1rem] mb-2 rounded-xl";
 
     const inputHandler = (e: React.FormEvent<HTMLInputElement>) => {
         const newState = { ...state };

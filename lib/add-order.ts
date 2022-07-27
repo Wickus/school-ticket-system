@@ -1,7 +1,9 @@
 import database from "./firebase";
 import { onValue, ref, set, get, child } from "firebase/database";
+import { setCookie } from "./cookies";
+import { FirebasePayload } from "interfaces/firebase-payload";
 
-export const addOrder = async (ticketData: any):Promise<boolean> => {
+export const addOrder = async (ticketData: FirebasePayload):Promise<boolean> => {
     const databaseLocation = "orders";
     return new Promise((resolve, reject) => {
         get(child(ref(database), databaseLocation))
@@ -13,6 +15,9 @@ export const addOrder = async (ticketData: any):Promise<boolean> => {
                 } else {
                     set(ref(database, databaseLocation), [...[ticketData]]);
                 }
+
+				setCookie("order-number", ticketData.m_payment_id, 6);
+
 				resolve(true);
             })
             .catch((e) => {
